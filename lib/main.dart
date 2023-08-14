@@ -9,8 +9,12 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(backgroundColor: Colors.black, body: SplashScreen()),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.dark(),
+      home: const Scaffold(
+        body: SplashScreen(), // Açılış ekranının olduğu sayfayı ekliyoruz
+      ),
     );
   }
 }
@@ -25,7 +29,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Future<void>.delayed(const Duration(seconds: 4), () {
+    Future<void>.delayed(const Duration(seconds: 5), () {
       Navigator.push(context, MaterialPageRoute(builder: (context) => const Anasayfa()));
     });
 
@@ -34,17 +38,17 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(final BuildContext context) {
-    return  Center(
-      child:  Hero(
-    tag: "logo",
-    child: Image.asset(
-      "assets/images/splash_amasya.png",
-                height: MediaQuery.of(context).size.height / 4,
+    bool isDarkTheme = Theme.of(context).brightness == Brightness.dark;
 
-      
-    ),
-    )
-    );
+    return Center(
+        child: Hero(
+      tag: "logo",
+      child: Image.asset(
+        "assets/images/splash_amasya.png",
+        color: isDarkTheme ? Colors.white : Colors.black,
+        height: MediaQuery.of(context).size.height / 4,
+      ),
+    ));
   }
 }
 
@@ -53,8 +57,12 @@ class Anasayfa extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text("ANASYAFAYA GELDI")),
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: const Text("HOMEPAGE"),
+      ),
+      body: const Center(child: Text("HOMEPAGE BODY")),
     );
   }
 }
